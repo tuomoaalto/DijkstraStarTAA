@@ -1,0 +1,28 @@
+DikstraStarVertailu
+
+1.  Yleiskuvaus
+2.  Käytettävät tietorakenteet
+2.1 Joukko
+2.2 Minimikeko
+
+
+
+
+1. Yleiskuvaus sovelluksesta
+
+	DikstraStarVertailu -sovelluksella on tarkoitus pystyä vertailemaan A*- ja Dijkstran algoritmejä verkkojen läpikulkuun  
+lähtöpisteestä päätepisteeseen. Sovellukseen tulee pystyä syöttämään graafisen käyttöliittymän kautta verkon kuvaus 
+(bittikarttana) lähtö- ja päätepisteineen. Lisäksi käyttöliittymän kautta täytyy voida syöttää etsinnässä käytettävä algoritmi, 
+sekä heuristiikka. Näiden tietojen avulla sovellus etsii reitin verkon läpi. Sovelluksen tulee näyttää etsinnän edistyminen 
+reaaliajassa.
+
+
+2.  Käytettävät tietorakenteet
+
+	Alla lueteltu sovelluksessa käytettäviä tietorakenteita
+
+2.1 Joukko 
+	Joukkoa tarvitaan kuvaamaan läpikäytävää verkkoa kummassakin algoritmissä 
+	
+2.2 Minimikeko
+	Minimikekoa tarvitaan  läpikäyntijärjestyksen ylläpitämiseen kummassakin algoritmissä.
