@@ -8,10 +8,9 @@ package dijkstrastarvertailuapp;
  * Interface definition for Minimikeko data structure
  * @author aaltotuo
  */
-public interface MinimikekoI<T> 
+public interface NodeHeapI<T> 
 {
-    public T minimum();
-    public T extractMin();
-    public void decreaseKey(T type, Long position, Long key);
-    public void insert(T type, Long key);
+    public Node minimum();
+    public Node extractMin();
+    public void insert(Node key);
 }
