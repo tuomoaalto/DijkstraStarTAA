@@ -162,8 +162,8 @@ public class NodeTest {
     public void testCompareToSelf() 
     {
         System.out.println("compareInstanceToSelf");
-        Node n = new Node(10, 10);
-        Node instance = new Node(10, 10);
+        Node n = new Node(10, 10, true);
+        Node instance = new Node(10, 10, true);
         int expResult = 0;
         int result = instance.compareTo(n);
         assertEquals("Result", 0, result);
@@ -173,8 +173,8 @@ public class NodeTest {
     public void testCompareToGreater() 
     {
         System.out.println("compareInstanceToGreater");
-        Node n = new Node(0, 0);
-        Node instance = new Node(0, 1);
+        Node n = new Node(0, 0, true);
+        Node instance = new Node(0, 1, true);
         int expResult = 0;
         int result = instance.compareTo(n);
         assertEquals("Result", 1, result);
@@ -184,8 +184,8 @@ public class NodeTest {
     public void testCompareToLesser() 
     {
         System.out.println("compareInstanceToLesser");
-        Node n = new Node(0, 0);
-        Node instance = new Node(-1, -1);
+        Node n = new Node(0, 0, true);
+        Node instance = new Node(-1, -1, true);
         int expResult = 0;
         int result = instance.compareTo(n);
         assertEquals("Result", -1, result);

@@ -10,7 +10,8 @@ package dijkstrastarvertailuapp;
  */
 public interface NodeHeapI<T> 
 {
-    public Node minimum();
-    public Node extractMin();
-    public void insert(Node key);
+    public Node    minimum();
+    public Node    extractMin();
+    public boolean insert(Node key);
+    public void    decreaseKey(int index, double fScore);
 }

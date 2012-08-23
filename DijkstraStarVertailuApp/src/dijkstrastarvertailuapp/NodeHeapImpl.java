@@ -44,6 +44,14 @@ public class NodeHeapImpl implements NodeHeapI
              //No nodes in heap.
             return null;
         }
+        else if (heapSize == 0)
+        {
+            heapSize--;
+            temp = nodearray[0];
+            nodearray[0] = null;
+            return temp;
+            
+        }
         
         temp = nodearray[0];
         
@@ -62,14 +70,25 @@ public class NodeHeapImpl implements NodeHeapI
      * 
      */
     @Override
-    public void insert(Node key)
-    {
+    public boolean insert(Node key)
+    {        
+        if (key == null)
+        {
+            return false;
+        }
+
         if(heapSize == -1)
         {
             nodearray[0] = key;
             heapSize++;
-            return;
+            return true;
         }
+        
+        if (this.contains(key))
+        {
+            return false;
+        }
+        
         heapSize++;
         int index = heapSize;
 
@@ -78,19 +97,38 @@ public class NodeHeapImpl implements NodeHeapI
             grow();
         }
         
-        while(index > 0 && nodearray[parent(index)].compareTo(key) == 1)
+        //while(index > 0 && nodearray[parent(index)].compareTo(key) == 1)
+        while(index > 0 && nodearray[parent(index)].compareFScores(key) == 1)
         {
             nodearray[index] = nodearray[parent(index)];
             index = parent(index);
         }
         nodearray[index] = key;
+        return true;
         
     }
 
+
+    @Override
+    public void decreaseKey(int index, double fScore)
+    {
+        if (fScore < nodearray[index].getfScore())
+        {
+            nodearray[index].setfScore(fScore);
+        
+            while(index > 0 && nodearray[parent(index)].compareFScores(nodearray[index]) == 1)
+            {
+                swapNodes(index, parent(index));
+                index = parent(index);
+            }
+        }
+    }    
+    
     /**
      * Method to get a String -representation of the heap
      * @return String
      */
+    @Override
     public String toString()
     {
         StringBuilder output = new StringBuilder();
@@ -115,7 +153,8 @@ public class NodeHeapImpl implements NodeHeapI
         
         if (rightroot <= heapSize)
         {
-            if( nodearray[leftroot].compareTo(nodearray[rightroot]) == 1)
+            //if( nodearray[leftroot].compareTo(nodearray[rightroot]) == 1)
+            if( nodearray[leftroot].compareFScores(nodearray[rightroot]) == 1)
             {
                 smallest = rightroot;
             }
@@ -124,7 +163,8 @@ public class NodeHeapImpl implements NodeHeapI
                 smallest = leftroot;
             }
             
-            if(nodearray[index].compareTo(nodearray[smallest]) == 1)
+            //if(nodearray[index].compareTo(nodearray[smallest]) == 1)
+            if(nodearray[index].compareFScores(nodearray[smallest]) == 1)
             {
                 swapNodes(index, smallest);
                 heapifyMin(smallest);
@@ -179,8 +219,83 @@ public class NodeHeapImpl implements NodeHeapI
         Node[] nodearrayNew = new Node[nodearray.length*growthFactor];
         System.arraycopy(nodearray, 0, nodearrayNew, 0, nodearray.length);
         nodearray = nodearrayNew;
-        nodearrayNew = null;
     }
+
+    /**
+     * Method to query the set for a specific node
+     * @return true  if the node is in the set
+     * @return false if the node is not in the set
+     */
+    public boolean contains(Node node) 
+    {
+        if (node == null)
+        {
+            return false;
+        }
+        
+        if(nodearray[0] == null)
+        {
+            return false;
+        }
+        
+        
+        int retval = binarySearch(nodearray, node);
+        
+        if (retval == -1) 
+        {
+            return false;
+        }
+        else 
+        {
+            return true;
+        }
+    }
+
+    /**
+     * Helper method to speed up searching through the node array with a binary search.
+     * @return -1 if the node was not found in the nodearray
+     * @return positive index where the node was found.
+     */
+    private int binarySearch(Node[] nodearray, Node subject)
+    {
+        int left  = 0;
+        int right = nodearray.length-1;
+        int middle;
+
+        while (left <= right)
+        {
+            middle = (left+right)/2;
+            
+            if (subject.compareTo(nodearray[middle]) == 0)
+            {
+                return middle;
+            }
+
+            if (subject.compareTo(nodearray[middle]) == 1 ) 
+            {
+                right = middle-1;
+            }
+            else 
+            {
+                left = middle+1;
+            }
+        }
+
+        return -1;
+    }    
+
+    public void resetHeap()
+    {
+        this.heapSize = -1;
+        for (Node node : nodearray)
+        {
+            node = null;
+        }     
+    }
+        
+    
+    
+
 
     
 }
