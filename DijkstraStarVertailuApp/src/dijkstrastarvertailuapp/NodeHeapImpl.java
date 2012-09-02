@@ -108,21 +108,6 @@ public class NodeHeapImpl implements NodeHeapI
         
     }
 
-
-    @Override
-    public void decreaseKey(int index, double fScore)
-    {
-        if (fScore < nodearray[index].getfScore())
-        {
-            nodearray[index].setfScore(fScore);
-        
-            while(index > 0 && nodearray[parent(index)].compareFScores(nodearray[index]) == 1)
-            {
-                swapNodes(index, parent(index));
-                index = parent(index);
-            }
-        }
-    }    
     
     /**
      * Method to get a String -representation of the heap
@@ -141,6 +126,7 @@ public class NodeHeapImpl implements NodeHeapI
         }
         return output.toString();
     }
+
     
     /**
      * Internal method for repairing the heap back to correct order after a Node is removed. 
@@ -237,53 +223,29 @@ public class NodeHeapImpl implements NodeHeapI
         {
             return false;
         }
-        
-        
-        int retval = binarySearch(nodearray, node);
-        
-        if (retval == -1) 
+
+        for (int i = 0; i < nodearray.length; i++) 
         {
-            return false;
+            if (nodearray[i] != null)
+            {
+                if (nodearray[i].compareTo(node) == 0)
+                {
+                    return true;
+                }
+            }
+            if (nodearray[i] == null)
+            {
+                break;
+            }
         }
-        else 
-        {
-            return true;
-        }
+        return false;
+        
+
     }
 
     /**
-     * Helper method to speed up searching through the node array with a binary search.
-     * @return -1 if the node was not found in the nodearray
-     * @return positive index where the node was found.
+     * Method to reset (empty) the heap
      */
-    private int binarySearch(Node[] nodearray, Node subject)
-    {
-        int left  = 0;
-        int right = nodearray.length-1;
-        int middle;
-
-        while (left <= right)
-        {
-            middle = (left+right)/2;
-            
-            if (subject.compareTo(nodearray[middle]) == 0)
-            {
-                return middle;
-            }
-
-            if (subject.compareTo(nodearray[middle]) == 1 ) 
-            {
-                right = middle-1;
-            }
-            else 
-            {
-                left = middle+1;
-            }
-        }
-
-        return -1;
-    }    
-
     public void resetHeap()
     {
         this.heapSize = -1;

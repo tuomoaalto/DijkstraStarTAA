@@ -12,6 +12,5 @@ public interface NodeHeapI<T>
 {
     public Node    minimum();
     public Node    extractMin();
-    public boolean insert(Node key);
-    public void    decreaseKey(int index, double fScore);
+    public boolean insert(Node key);    
 }
